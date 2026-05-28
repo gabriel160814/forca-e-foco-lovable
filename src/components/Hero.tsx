@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import heroImg from "@/assets/atleta-gabriel.jpg";
 
 export function Hero() {
