@@ -27,6 +27,15 @@ export function Hero() {
           Check-in antecipado para controle de vagas nas aulas da academia —
           evitando superlotação e organizando as turmas com inteligência.
         </p>
+        <div className="mt-8">
+          <Link
+            to="/checkin"
+            className="inline-flex items-center justify-center rounded-lg bg-primary px-7 py-3.5 text-base font-semibold text-primary-foreground transition-transform hover:scale-[1.03]"
+            style={{ boxShadow: "var(--shadow-glow)" }}
+          >
+            Fazer check-in →
+          </Link>
+        </div>
         <div className="mt-9 flex flex-wrap gap-4 text-sm">
           <div className="rounded-lg border border-border bg-card/60 px-5 py-3 backdrop-blur">
             <span className="block text-muted-foreground">Emissão</span>
