@@ -1,0 +1,276 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useMemo, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { z } from "zod";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+export const Route = createFileRoute("/checkin")({
+  head: () => ({
+    meta: [
+      { title: "Check-in — Força & Foco" },
+      {
+        name: "description",
+        content:
+          "Faça seu check-in antecipado nas aulas da academia Força & Foco e garanta sua vaga.",
+      },
+      { property: "og:title", content: "Check-in — Força & Foco" },
+      {
+        property: "og:description",
+        content: "Garanta sua vaga nas aulas com o check-in antecipado.",
+      },
+    ],
+  }),
+  component: CheckinPage,
+});
+
+const MODALIDADES = ["Musculação", "Cross", "Funcional", "Spinning", "Boxe"];
+const HORARIOS = ["06:00", "07:00", "12:00", "18:00", "19:00", "20:00"];
+const VAGAS_POR_TURMA = 15;
+
+const schema = z.object({
+  nome: z.string().trim().min(2, "Informe o nome do aluno").max(80, "Nome muito longo"),
+  telefone: z
+    .string()
+    .trim()
+    .max(20, "Telefone muito longo")
+    .regex(/^[\d\s()+-]*$/, "Telefone inválido")
+    .optional()
+    .or(z.literal("")),
+  modalidade: z.string().min(1, "Selecione a modalidade"),
+  horario: z.string().min(1, "Selecione o horário"),
+});
+
+type Checkin = {
+  id: string;
+  nome: string;
+  telefone: string | null;
+  modalidade: string;
+  horario: string;
+  created_at: string;
+};
+
+function startOfTodayISO() {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  return d.toISOString();
+}
+
+function CheckinPage() {
+  const queryClient = useQueryClient();
+  const [nome, setNome] = useState("");
+  const [telefone, setTelefone] = useState("");
+  const [modalidade, setModalidade] = useState(MODALIDADES[0]);
+  const [horario, setHorario] = useState("");
+
+  const { data: checkins = [] } = useQuery({
+    queryKey: ["checkins"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("checkins")
+        .select("*")
+        .gte("created_at", startOfTodayISO())
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return data as Checkin[];
+    },
+  });
+
+  const vagas = useMemo(() => {
+    const map: Record<string, number> = {};
+    for (const h of HORARIOS) map[h] = 0;
+    for (const c of checkins) if (c.horario in map) map[c.horario] += 1;
+    return map;
+  }, [checkins]);
+
+  const mutation = useMutation({
+    mutationFn: async (payload: z.infer<typeof schema>) => {
+      const ocupadas = checkins.filter((c) => c.horario === payload.horario).length;
+      if (ocupadas >= VAGAS_POR_TURMA) {
+        throw new Error("Turma lotada! Escolha outro horário.");
+      }
+      const { error } = await supabase.from("checkins").insert({
+        nome: payload.nome,
+        telefone: payload.telefone || null,
+        modalidade: payload.modalidade,
+        horario: payload.horario,
+      });
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast.success("Check-in confirmado! Bom treino 💪");
+      setNome("");
+      setTelefone("");
+      setHorario("");
+      queryClient.invalidateQueries({ queryKey: ["checkins"] });
+    },
+    onError: (err: Error) => toast.error(err.message),
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const parsed = schema.safeParse({ nome, telefone, modalidade, horario });
+    if (!parsed.success) {
+      toast.error(parsed.error.issues[0].message);
+      return;
+    }
+    mutation.mutate(parsed.data);
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Toaster richColors position="top-center" />
+
+      <header className="border-b border-border">
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
+          <a href="/" className="font-display text-2xl text-foreground">
+            Força &amp; <span className="text-primary">Foco</span>
+          </a>
+          <a
+            href="/"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            ← Voltar ao plano
+          </a>
+        </div>
+      </header>
+
+      <main className="mx-auto max-w-5xl px-6 py-12">
+        <div className="mb-10">
+          <h1 className="text-4xl text-foreground sm:text-5xl">Check-in de Aula</h1>
+          <p className="mt-2 text-muted-foreground">
+            Garanta sua vaga antecipadamente. Cada turma tem {VAGAS_POR_TURMA} vagas.
+          </p>
+        </div>
+
+        <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr]">
+          <form
+            onSubmit={handleSubmit}
+            className="rounded-2xl border border-border bg-card p-7"
+            style={{ boxShadow: "var(--shadow-card)" }}
+          >
+            <div className="space-y-5">
+              <div>
+                <Label htmlFor="nome">Nome do aluno</Label>
+                <Input
+                  id="nome"
+                  value={nome}
+                  onChange={(e) => setNome(e.target.value)}
+                  placeholder="Ex.: João da Silva"
+                  className="mt-1.5"
+                  maxLength={80}
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="telefone">Telefone (opcional)</Label>
+                <Input
+                  id="telefone"
+                  value={telefone}
+                  onChange={(e) => setTelefone(e.target.value)}
+                  placeholder="(00) 90000-0000"
+                  className="mt-1.5"
+                  maxLength={20}
+                  inputMode="tel"
+                />
+              </div>
+
+              <div>
+                <Label>Modalidade</Label>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {MODALIDADES.map((m) => (
+                    <button
+                      key={m}
+                      type="button"
+                      onClick={() => setModalidade(m)}
+                      className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
+                        modalidade === m
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "border-border bg-secondary text-foreground hover:border-primary/50"
+                      }`}
+                    >
+                      {m}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <Label>Horário</Label>
+                <div className="mt-2 grid grid-cols-3 gap-2">
+                  {HORARIOS.map((h) => {
+                    const ocupadas = vagas[h] ?? 0;
+                    const lotado = ocupadas >= VAGAS_POR_TURMA;
+                    const restantes = VAGAS_POR_TURMA - ocupadas;
+                    return (
+                      <button
+                        key={h}
+                        type="button"
+                        disabled={lotado}
+                        onClick={() => setHorario(h)}
+                        className={`rounded-xl border p-3 text-center transition-colors disabled:cursor-not-allowed disabled:opacity-40 ${
+                          horario === h
+                            ? "border-primary bg-primary/15"
+                            : "border-border bg-secondary hover:border-primary/50"
+                        }`}
+                      >
+                        <span className="block font-display text-2xl text-foreground">{h}</span>
+                        <span
+                          className={`text-xs ${lotado ? "text-destructive" : "text-muted-foreground"}`}
+                        >
+                          {lotado ? "Lotado" : `${restantes} vagas`}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <Button
+                type="submit"
+                className="w-full"
+                size="lg"
+                disabled={mutation.isPending}
+              >
+                {mutation.isPending ? "Confirmando..." : "Confirmar check-in"}
+              </Button>
+            </div>
+          </form>
+
+          <aside>
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl text-foreground">Check-ins de hoje</h2>
+              <span className="rounded-full bg-primary/15 px-3 py-1 text-sm font-semibold text-primary">
+                {checkins.length}
+              </span>
+            </div>
+
+            <div className="mt-4 space-y-2">
+              {checkins.length === 0 && (
+                <p className="rounded-xl border border-dashed border-border p-6 text-center text-sm text-muted-foreground">
+                  Nenhum check-in registrado ainda hoje.
+                </p>
+              )}
+              {checkins.map((c) => (
+                <div
+                  key={c.id}
+                  className="flex items-center justify-between rounded-xl border border-border bg-card px-4 py-3"
+                >
+                  <div>
+                    <p className="font-semibold text-foreground">{c.nome}</p>
+                    <p className="text-xs text-muted-foreground">{c.modalidade}</p>
+                  </div>
+                  <span className="font-display text-xl text-primary">{c.horario}</span>
+                </div>
+              ))}
+            </div>
+          </aside>
+        </div>
+      </main>
+    </div>
+  );
+}
