@@ -1,14 +1,14 @@
-import heroImg from "@/assets/hero-gym.jpg";
+import heroImg from "@/assets/atleta-gabriel.jpg";
 
 export function Hero() {
   return (
     <header className="relative min-h-[88vh] flex items-center overflow-hidden">
       <img
         src={heroImg}
-        alt="Atleta treinando com foco em academia"
+        alt="Atleta Força & Foco em destaque"
         width={1920}
         height={1080}
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover object-top"
       />
       <div
         className="absolute inset-0"
