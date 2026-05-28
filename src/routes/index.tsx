@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Hero } from "@/components/Hero";
+import { AthletesStrip } from "@/components/AthletesStrip";
 import { Section, InfoCard, ListItem, CheckItem } from "@/components/PlanSections";
 
 export const Route = createFileRoute("/")({
@@ -37,6 +38,9 @@ function Index() {
   return (
     <div className="min-h-screen bg-background">
       <Hero />
+      <AthletesStrip />
+
+
 
       <nav className="sticky top-0 z-20 border-y border-border bg-background/85 backdrop-blur">
         <div className="mx-auto flex max-w-6xl gap-1 overflow-x-auto px-6 py-3 text-sm">
