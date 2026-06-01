@@ -8,6 +8,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import bgCheckin from "@/assets/bg-checkin.jpg";
 
 export const Route = createFileRoute("/checkin")({
   head: () => ({
@@ -122,7 +123,14 @@ function CheckinPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="relative min-h-screen">
+      <img
+        src={bgCheckin}
+        alt=""
+        aria-hidden
+        className="fixed inset-0 -z-10 h-full w-full object-cover"
+      />
+      <div className="fixed inset-0 -z-10 bg-background/85 backdrop-blur-sm" />
       <Toaster richColors position="top-center" />
 
       <header className="border-b border-border">
