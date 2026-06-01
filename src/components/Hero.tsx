@@ -17,12 +17,8 @@ export function Hero() {
       />
       <div className="relative z-10 mx-auto w-full max-w-6xl px-6 py-24">
         <span className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-background/40 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary backdrop-blur">
-          Plano de Implantação · v1.0.0
+          Força &amp; Foco · v1.0.0
         </span>
-        <h1 className="mt-6 max-w-3xl text-6xl leading-[0.95] text-foreground sm:text-7xl md:text-8xl">
-          Sistema de Check-in
-          <span className="block text-primary">Força &amp; Foco</span>
-        </h1>
         <p className="mt-6 max-w-xl text-lg text-muted-foreground">
           Check-in antecipado para controle de vagas nas aulas da academia —
           evitando superlotação e organizando as turmas com inteligência.
