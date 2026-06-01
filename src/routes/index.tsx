@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Hero } from "@/components/Hero";
 import { AthletesStrip } from "@/components/AthletesStrip";
-import { Section, InfoCard, ListItem, CheckItem } from "@/components/PlanSections";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -10,7 +9,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Documento do plano de implantação do Sistema de Check-in Força & Foco: escopo, cronograma, checklist, migração, treinamento, homologação e termo de aceite.",
+          "Sistema web de check-in antecipado para controle de vagas nas aulas da academia Força & Foco.",
       },
       { property: "og:title", content: "Plano de Implantação — Check-in Força & Foco" },
       {
@@ -23,16 +22,6 @@ export const Route = createFileRoute("/")({
   }),
   component: Index,
 });
-
-const nav = [
-  ["projeto", "Projeto"],
-  ["checklist", "Checklist"],
-  ["migracao", "Migração"],
-  ["treinamento", "Treinamento"],
-  ["homologacao", "Homologação"],
-  ["operacao", "Operação"],
-  ["aceite", "Aceite"],
-];
 
 function Index() {
   return (
