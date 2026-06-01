@@ -1,21 +1,19 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Hero } from "@/components/Hero";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { AthletesStrip } from "@/components/AthletesStrip";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Plano de Implantação — Check-in Força & Foco v1.0.0" },
+      { title: "Força & Foco — Academia" },
       {
         name: "description",
         content:
-          "Sistema web de check-in antecipado para controle de vagas nas aulas da academia Força & Foco.",
+          "Academia Força & Foco — disciplina, energia e resultado. Faça seu check-in antecipado.",
       },
-      { property: "og:title", content: "Plano de Implantação — Check-in Força & Foco" },
+      { property: "og:title", content: "Força & Foco" },
       {
         property: "og:description",
-        content:
-          "Sistema web de check-in antecipado para controle de vagas nas aulas da academia.",
+        content: "Academia Força & Foco — faça seu check-in antecipado.",
       },
       { property: "og:type", content: "website" },
     ],
@@ -26,13 +24,28 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <div className="min-h-screen bg-background">
-      <Hero />
+      <header className="border-b border-border">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+          <span className="font-display text-3xl text-foreground">
+            Força &amp; <span className="text-primary">Foco</span>
+          </span>
+          <Link
+            to="/checkin"
+            className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03]"
+            style={{ boxShadow: "var(--shadow-glow)" }}
+          >
+            Fazer check-in →
+          </Link>
+        </div>
+      </header>
+
       <AthletesStrip />
 
       <footer className="border-t border-border py-10 text-center text-sm text-muted-foreground">
         <p className="font-display text-2xl text-foreground">Força &amp; Foco</p>
-        <p className="mt-2">Plano de Implantação · v1.0.0 · Gabriel Damazio · 28/05/2026</p>
+        <p className="mt-2">Disciplina · Energia · Resultado</p>
       </footer>
     </div>
   );
 }
+
