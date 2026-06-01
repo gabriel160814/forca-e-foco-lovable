@@ -1,51 +1,54 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { AthletesStrip } from "@/components/AthletesStrip";
+import bgWelcome from "@/assets/bg-checkin.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Força & Foco — Academia" },
+      { title: "Bem-vindo — Força & Foco" },
       {
         name: "description",
-        content:
-          "Academia Força & Foco — disciplina, energia e resultado. Faça seu check-in antecipado.",
+        content: "Bem-vindo à academia Força & Foco. Disciplina, energia e resultado.",
       },
-      { property: "og:title", content: "Força & Foco" },
+      { property: "og:title", content: "Bem-vindo — Força & Foco" },
       {
         property: "og:description",
-        content: "Academia Força & Foco — faça seu check-in antecipado.",
+        content: "Academia Força & Foco — disciplina, energia e resultado.",
       },
       { property: "og:type", content: "website" },
     ],
   }),
-  component: Index,
+  component: Welcome,
 });
 
-function Index() {
+function Welcome() {
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b border-border">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-          <span className="font-display text-3xl text-foreground">
-            Força &amp; <span className="text-primary">Foco</span>
-          </span>
-          <Link
-            to="/checkin"
-            className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03]"
-            style={{ boxShadow: "var(--shadow-glow)" }}
-          >
-            Fazer check-in →
-          </Link>
-        </div>
-      </header>
-
-      <AthletesStrip />
-
-      <footer className="border-t border-border py-10 text-center text-sm text-muted-foreground">
-        <p className="font-display text-2xl text-foreground">Força &amp; Foco</p>
-        <p className="mt-2">Disciplina · Energia · Resultado</p>
-      </footer>
-    </div>
+    <main className="relative min-h-screen overflow-hidden">
+      <img
+        src={bgWelcome}
+        alt=""
+        aria-hidden
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+      <div
+        className="absolute inset-0"
+        style={{ background: "var(--gradient-hero)" }}
+      />
+      <div className="relative z-10 mx-auto flex min-h-screen max-w-4xl flex-col items-center justify-center px-6 text-center">
+        <span className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-background/40 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary backdrop-blur">
+          Academia
+        </span>
+        <h1 className="mt-6 text-6xl leading-[0.95] text-foreground sm:text-7xl md:text-8xl">
+          Disciplina · Energia
+          <span className="block text-primary">Resultado</span>
+        </h1>
+        <Link
+          to="/inicio"
+          className="mt-10 inline-flex items-center justify-center rounded-xl bg-primary px-9 py-4 text-lg font-bold uppercase tracking-wide text-primary-foreground transition-transform hover:scale-[1.04]"
+          style={{ boxShadow: "var(--shadow-glow)" }}
+        >
+          Bem-vindo ao Força &amp; Foco →
+        </Link>
+      </div>
+    </main>
   );
 }
-
