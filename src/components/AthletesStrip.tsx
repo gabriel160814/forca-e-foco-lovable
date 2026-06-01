@@ -1,15 +1,17 @@
 import ga from "@/assets/atleta-ga.jpg";
 import gg from "@/assets/atleta-gg.jpg";
+import gbr from "@/assets/atleta-gbr.jpg";
 
 const photos = [
   { src: ga, alt: "Atleta Força & Foco treinando" },
   { src: gg, alt: "Atleta Força & Foco em treino de pernas" },
+  { src: gbr, alt: "Atleta Ganley Força & Foco em pose" },
 ];
 
 export function AthletesStrip() {
   return (
     <section className="relative border-y border-border">
-      <div className="grid grid-cols-1 sm:grid-cols-2">
+      <div className="grid grid-cols-1 sm:grid-cols-3">
         {photos.map((p) => (
           <div key={p.alt} className="group relative aspect-[4/3] overflow-hidden">
             <img
