@@ -30,6 +30,10 @@ function Inicio() {
       <footer className="border-t border-border py-10 text-center text-sm text-muted-foreground">
         <p className="font-display text-2xl text-foreground">Força &amp; Foco</p>
         <p className="mt-2">Disciplina · Energia · Resultado</p>
+        <div className="mt-4 flex justify-center gap-4">
+          <a href="/checkin" className="text-primary hover:underline">Fazer check-in</a>
+          <a href="/registros" className="text-primary hover:underline">Gerenciar registros</a>
+        </div>
       </footer>
     </div>
   );
