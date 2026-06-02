@@ -162,9 +162,10 @@ function CheckinPage() {
         <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr]">
           <form
             onSubmit={handleSubmit}
-            className="rounded-2xl border border-border bg-card p-7"
+            className="rounded-2xl border border-border bg-card/95 p-7 backdrop-blur"
             style={{ boxShadow: "var(--shadow-card)" }}
           >
+
             <div className="space-y-5">
               <div>
                 <Label htmlFor="nome">Nome do aluno</Label>
