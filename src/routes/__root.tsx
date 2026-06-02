@@ -72,14 +72,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Força e Foco" },
+      { name: "description", content: "Força & Foco Check-in is a web application for early class check-ins at an academy." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Força e Foco" },
+      { property: "og:description", content: "Força & Foco Check-in is a web application for early class check-ins at an academy." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Força e Foco" },
+      { name: "twitter:description", content: "Força & Foco Check-in is a web application for early class check-ins at an academy." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/PmArCzGanQgbI3ZPnqeBYbUXfVm1/social-images/social-1780425159493-IMG-20260602-WA0018.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/PmArCzGanQgbI3ZPnqeBYbUXfVm1/social-images/social-1780425159493-IMG-20260602-WA0018.webp" },
     ],
     links: [
       {
