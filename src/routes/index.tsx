@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import bgWelcome from "@/assets/bg-checkin.jpg";
+import bgWelcome from "@/assets/bg-welcome.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
