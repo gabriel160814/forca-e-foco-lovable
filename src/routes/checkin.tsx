@@ -128,9 +128,13 @@ function CheckinPage() {
         src={bgCheckin}
         alt=""
         aria-hidden
-        className="fixed inset-0 -z-10 h-full w-full object-cover"
+        loading="eager"
+        decoding="async"
+        className="fixed inset-0 -z-10 h-full w-full object-cover [image-rendering:auto]"
+        style={{ imageRendering: "auto" }}
       />
-      <div className="fixed inset-0 -z-10 bg-background/85 backdrop-blur-sm" />
+      <div className="fixed inset-0 -z-10 bg-gradient-to-b from-background/70 via-background/60 to-background/80" />
+
       <Toaster richColors position="top-center" />
 
       <header className="border-b border-border">
@@ -158,9 +162,10 @@ function CheckinPage() {
         <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr]">
           <form
             onSubmit={handleSubmit}
-            className="rounded-2xl border border-border bg-card p-7"
+            className="rounded-2xl border border-border bg-card/95 p-7 backdrop-blur"
             style={{ boxShadow: "var(--shadow-card)" }}
           >
+
             <div className="space-y-5">
               <div>
                 <Label htmlFor="nome">Nome do aluno</Label>
@@ -266,8 +271,9 @@ function CheckinPage() {
               {checkins.map((c) => (
                 <div
                   key={c.id}
-                  className="flex items-center justify-between rounded-xl border border-border bg-card px-4 py-3"
+                  className="flex items-center justify-between rounded-xl border border-border bg-card/90 px-4 py-3 backdrop-blur"
                 >
+
                   <div>
                     <p className="font-semibold text-foreground">{c.nome}</p>
                     <p className="text-xs text-muted-foreground">{c.modalidade}</p>
