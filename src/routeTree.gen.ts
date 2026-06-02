@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RegistrosRouteImport } from './routes/registros'
 import { Route as InicioRouteImport } from './routes/inicio'
+import { Route as HojeRouteImport } from './routes/hoje'
 import { Route as CheckinRouteImport } from './routes/checkin'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -30,6 +31,11 @@ const InicioRoute = InicioRouteImport.update({
   path: '/inicio',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HojeRoute = HojeRouteImport.update({
+  id: '/hoje',
+  path: '/hoje',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CheckinRoute = CheckinRouteImport.update({
   id: '/checkin',
   path: '/checkin',
@@ -44,6 +50,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/checkin': typeof CheckinRoute
+  '/hoje': typeof HojeRoute
   '/inicio': typeof InicioRoute
   '/registros': typeof RegistrosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/checkin': typeof CheckinRoute
+  '/hoje': typeof HojeRoute
   '/inicio': typeof InicioRoute
   '/registros': typeof RegistrosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -59,21 +67,36 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/checkin': typeof CheckinRoute
+  '/hoje': typeof HojeRoute
   '/inicio': typeof InicioRoute
   '/registros': typeof RegistrosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/checkin' | '/inicio' | '/registros' | '/sitemap.xml'
+  fullPaths:
+    | '/'
+    | '/checkin'
+    | '/hoje'
+    | '/inicio'
+    | '/registros'
+    | '/sitemap.xml'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/checkin' | '/inicio' | '/registros' | '/sitemap.xml'
-  id: '__root__' | '/' | '/checkin' | '/inicio' | '/registros' | '/sitemap.xml'
+  to: '/' | '/checkin' | '/hoje' | '/inicio' | '/registros' | '/sitemap.xml'
+  id:
+    | '__root__'
+    | '/'
+    | '/checkin'
+    | '/hoje'
+    | '/inicio'
+    | '/registros'
+    | '/sitemap.xml'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CheckinRoute: typeof CheckinRoute
+  HojeRoute: typeof HojeRoute
   InicioRoute: typeof InicioRoute
   RegistrosRoute: typeof RegistrosRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -102,6 +125,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InicioRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hoje': {
+      id: '/hoje'
+      path: '/hoje'
+      fullPath: '/hoje'
+      preLoaderRoute: typeof HojeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checkin': {
       id: '/checkin'
       path: '/checkin'
@@ -122,6 +152,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CheckinRoute: CheckinRoute,
+  HojeRoute: HojeRoute,
   InicioRoute: InicioRoute,
   RegistrosRoute: RegistrosRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
