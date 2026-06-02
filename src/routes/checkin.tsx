@@ -128,9 +128,13 @@ function CheckinPage() {
         src={bgCheckin}
         alt=""
         aria-hidden
-        className="fixed inset-0 -z-10 h-full w-full object-cover"
+        loading="eager"
+        decoding="async"
+        className="fixed inset-0 -z-10 h-full w-full object-cover [image-rendering:auto]"
+        style={{ imageRendering: "auto" }}
       />
-      <div className="fixed inset-0 -z-10 bg-background/85 backdrop-blur-sm" />
+      <div className="fixed inset-0 -z-10 bg-gradient-to-b from-background/70 via-background/60 to-background/80" />
+
       <Toaster richColors position="top-center" />
 
       <header className="border-b border-border">
