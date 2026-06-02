@@ -271,8 +271,9 @@ function CheckinPage() {
               {checkins.map((c) => (
                 <div
                   key={c.id}
-                  className="flex items-center justify-between rounded-xl border border-border bg-card px-4 py-3"
+                  className="flex items-center justify-between rounded-xl border border-border bg-card/90 px-4 py-3 backdrop-blur"
                 >
+
                   <div>
                     <p className="font-semibold text-foreground">{c.nome}</p>
                     <p className="text-xs text-muted-foreground">{c.modalidade}</p>
