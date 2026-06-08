@@ -63,6 +63,7 @@ function startOfTodayISO() {
 
 function CheckinPage() {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const [nome, setNome] = useState("");
   const [telefone, setTelefone] = useState("");
   const [modalidade, setModalidade] = useState(MODALIDADES[0]);
@@ -108,6 +109,7 @@ function CheckinPage() {
       setTelefone("");
       setHorario("");
       queryClient.invalidateQueries({ queryKey: ["checkins"] });
+      navigate({ to: "/hoje" });
     },
     onError: (err: Error) => toast.error(err.message),
   });
