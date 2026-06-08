@@ -120,7 +120,7 @@ function HojePage() {
         aria-hidden
         className="fixed inset-0 -z-10 h-full w-full object-cover"
       />
-      <div className="fixed inset-0 -z-10 bg-gradient-to-b from-background/55 via-background/45 to-background/65" />
+      <div className="fixed inset-0 -z-10 bg-gradient-to-b from-background/55 via-background/45 to-background/65 backdrop-blur-[2px]" />
       <Toaster richColors position="top-center" />
 
       <header className="border-b border-border">
