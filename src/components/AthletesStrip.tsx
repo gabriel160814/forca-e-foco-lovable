@@ -1,6 +1,6 @@
-import ga from "@/assets/atleta-ga.jpg";
-import gg from "@/assets/atleta-gg.jpg";
-import gbr from "@/assets/atleta-gbr.jpg";
+import ga from "@/assets/athlete-1.jpg";
+import gg from "@/assets/athlete-2.jpg";
+import gbr from "@/assets/athlete-3.jpg";
 
 const photos = [
   { src: ga, alt: "Atleta Força & Foco treinando" },
