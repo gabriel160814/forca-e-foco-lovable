@@ -161,7 +161,7 @@ function CheckinPage() {
           </p>
         </div>
 
-        <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr]">
+        <div className="mx-auto max-w-2xl">
           <form
             onSubmit={handleSubmit}
             className="rounded-2xl border border-border bg-card/95 p-7 backdrop-blur"
@@ -255,36 +255,6 @@ function CheckinPage() {
               </Button>
             </div>
           </form>
-
-          <aside>
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl text-foreground">Check-ins de hoje</h2>
-              <span className="rounded-full bg-primary/15 px-3 py-1 text-sm font-semibold text-primary">
-                {checkins.length}
-              </span>
-            </div>
-
-            <div className="mt-4 space-y-2">
-              {checkins.length === 0 && (
-                <p className="rounded-xl border border-dashed border-border p-6 text-center text-sm text-muted-foreground">
-                  Nenhum check-in registrado ainda hoje.
-                </p>
-              )}
-              {checkins.map((c) => (
-                <div
-                  key={c.id}
-                  className="flex items-center justify-between rounded-xl border border-border bg-card/90 px-4 py-3 backdrop-blur"
-                >
-
-                  <div>
-                    <p className="font-semibold text-foreground">{c.nome}</p>
-                    <p className="text-xs text-muted-foreground">{c.modalidade}</p>
-                  </div>
-                  <span className="font-display text-xl text-primary">{c.horario}</span>
-                </div>
-              ))}
-            </div>
-          </aside>
         </div>
       </main>
     </div>
