@@ -22,7 +22,6 @@ export type Database = {
           modalidade: string
           nome: string
           status: string
-          telefone: string | null
         }
         Insert: {
           created_at?: string
@@ -31,7 +30,6 @@ export type Database = {
           modalidade: string
           nome: string
           status?: string
-          telefone?: string | null
         }
         Update: {
           created_at?: string
@@ -40,7 +38,6 @@ export type Database = {
           modalidade?: string
           nome?: string
           status?: string
-          telefone?: string | null
         }
         Relationships: []
       }
@@ -49,7 +46,11 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      delete_checkin: { Args: { _id: string }; Returns: undefined }
+      set_checkin_status: {
+        Args: { _id: string; _status: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
