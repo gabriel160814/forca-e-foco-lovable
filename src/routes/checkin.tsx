@@ -35,13 +35,6 @@ const VAGAS_POR_TURMA = 15;
 
 const schema = z.object({
   nome: z.string().trim().min(2, "Informe o nome do aluno").max(80, "Nome muito longo"),
-  telefone: z
-    .string()
-    .trim()
-    .max(20, "Telefone muito longo")
-    .regex(/^[\d\s()+-]*$/, "Telefone inválido")
-    .optional()
-    .or(z.literal("")),
   modalidade: z.string().min(1, "Selecione a modalidade"),
   horario: z.string().min(1, "Selecione o horário"),
 });
@@ -49,7 +42,6 @@ const schema = z.object({
 type Checkin = {
   id: string;
   nome: string;
-  telefone: string | null;
   modalidade: string;
   horario: string;
   created_at: string;
