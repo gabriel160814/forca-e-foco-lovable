@@ -23,7 +23,6 @@ type Checkin = {
   id: string;
   nome: string;
   modalidade: string;
-  modalidade: string;
   horario: string;
   status: Status;
   created_at: string;
@@ -176,7 +175,7 @@ function RegistrosPage() {
                   <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
                     <span>{r.modalidade}</span>
                     <span>às <span className="text-foreground">{r.horario}</span></span>
-                    {r.telefone && <span>{r.telefone}</span>}
+                    
                     <span>{new Date(r.created_at).toLocaleString("pt-BR")}</span>
                   </div>
                 </div>
