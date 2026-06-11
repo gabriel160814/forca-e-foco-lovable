@@ -22,7 +22,7 @@ type Status = "pendente" | "aceito" | "recusado";
 type Checkin = {
   id: string;
   nome: string;
-  telefone: string | null;
+  modalidade: string;
   modalidade: string;
   horario: string;
   status: Status;

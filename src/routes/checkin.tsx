@@ -170,18 +170,7 @@ function CheckinPage() {
                 />
               </div>
 
-              <div>
-                <Label htmlFor="telefone">Telefone (opcional)</Label>
-                <Input
-                  id="telefone"
-                  value={telefone}
-                  onChange={(e) => setTelefone(e.target.value)}
-                  placeholder="(00) 90000-0000"
-                  className="mt-1.5"
-                  maxLength={20}
-                  inputMode="tel"
-                />
-              </div>
+
 
               <div>
                 <Label>Modalidade</Label>
