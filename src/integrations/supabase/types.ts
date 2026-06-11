@@ -46,11 +46,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      delete_checkin: { Args: { _id: string }; Returns: undefined }
-      set_checkin_status: {
-        Args: { _id: string; _status: string }
-        Returns: undefined
-      }
+      [_ in never]: never
     }
     Enums: {
       [_ in never]: never

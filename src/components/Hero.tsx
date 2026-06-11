@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import heroImg from "@/assets/hero-athlete.jpg";
+import heroAsset from "@/assets/hero-gabe.jpg.asset.json";
+const heroImg = heroAsset.url;
 
 export function Hero() {
   return (
