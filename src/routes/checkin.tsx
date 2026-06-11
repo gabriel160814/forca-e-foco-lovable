@@ -57,7 +57,6 @@ function CheckinPage() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [nome, setNome] = useState("");
-  const [telefone, setTelefone] = useState("");
   const [modalidade, setModalidade] = useState(MODALIDADES[0]);
   const [horario, setHorario] = useState("");
 
@@ -89,7 +88,6 @@ function CheckinPage() {
       }
       const { error } = await supabase.from("checkins").insert({
         nome: payload.nome,
-        telefone: payload.telefone || null,
         modalidade: payload.modalidade,
         horario: payload.horario,
       });
@@ -98,7 +96,6 @@ function CheckinPage() {
     onSuccess: () => {
       toast.success("Check-in confirmado! Bom treino 💪");
       setNome("");
-      setTelefone("");
       setHorario("");
       queryClient.invalidateQueries({ queryKey: ["checkins"] });
       navigate({ to: "/hoje" });
@@ -108,7 +105,7 @@ function CheckinPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const parsed = schema.safeParse({ nome, telefone, modalidade, horario });
+    const parsed = schema.safeParse({ nome, modalidade, horario });
     if (!parsed.success) {
       toast.error(parsed.error.issues[0].message);
       return;
