@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       checkins: {
         Row: {
+          contato: string | null
           created_at: string
           horario: string
           id: string
@@ -24,6 +25,7 @@ export type Database = {
           status: string
         }
         Insert: {
+          contato?: string | null
           created_at?: string
           horario: string
           id?: string
@@ -32,6 +34,7 @@ export type Database = {
           status?: string
         }
         Update: {
+          contato?: string | null
           created_at?: string
           horario?: string
           id?: string

@@ -35,6 +35,11 @@ const VAGAS_POR_TURMA = 15;
 
 const schema = z.object({
   nome: z.string().trim().min(2, "Informe o nome do aluno").max(80, "Nome muito longo"),
+  contato: z
+    .string()
+    .trim()
+    .min(5, "Informe um telefone ou e-mail para contato")
+    .max(120, "Contato muito longo"),
   modalidade: z.string().min(1, "Selecione a modalidade"),
   horario: z.string().min(1, "Selecione o horário"),
 });
@@ -42,6 +47,7 @@ const schema = z.object({
 type Checkin = {
   id: string;
   nome: string;
+  contato: string | null;
   modalidade: string;
   horario: string;
   created_at: string;
@@ -57,6 +63,7 @@ function CheckinPage() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [nome, setNome] = useState("");
+  const [contato, setContato] = useState("");
   const [modalidade, setModalidade] = useState(MODALIDADES[0]);
   const [horario, setHorario] = useState("");
 
@@ -88,6 +95,7 @@ function CheckinPage() {
       }
       const { error } = await supabase.from("checkins").insert({
         nome: payload.nome,
+        contato: payload.contato,
         modalidade: payload.modalidade,
         horario: payload.horario,
       });
@@ -96,6 +104,7 @@ function CheckinPage() {
     onSuccess: () => {
       toast.success("Check-in confirmado! Bom treino 💪");
       setNome("");
+      setContato("");
       setHorario("");
       queryClient.invalidateQueries({ queryKey: ["checkins"] });
       navigate({ to: "/hoje" });
@@ -105,7 +114,7 @@ function CheckinPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const parsed = schema.safeParse({ nome, modalidade, horario });
+    const parsed = schema.safeParse({ nome, contato, modalidade, horario });
     if (!parsed.success) {
       toast.error(parsed.error.issues[0].message);
       return;
@@ -156,7 +165,6 @@ function CheckinPage() {
             className="rounded-2xl border border-border bg-card/95 p-7 backdrop-blur"
             style={{ boxShadow: "var(--shadow-card)" }}
           >
-
             <div className="space-y-5">
               <div>
                 <Label htmlFor="nome">Nome do aluno</Label>
@@ -169,6 +177,19 @@ function CheckinPage() {
                   maxLength={80}
                 />
               </div>
+
+              <div>
+                <Label htmlFor="contato">Telefone ou e-mail</Label>
+                <Input
+                  id="contato"
+                  value={contato}
+                  onChange={(e) => setContato(e.target.value)}
+                  placeholder="(00) 90000-0000 ou seuemail@exemplo.com"
+                  className="mt-1.5"
+                  maxLength={120}
+                />
+              </div>
+
 
 
 

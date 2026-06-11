@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Hero } from "@/components/Hero";
 import { AthletesStrip } from "@/components/AthletesStrip";
+import { Modalidades } from "@/components/Modalidades";
 
 export const Route = createFileRoute("/inicio")({
   head: () => ({
@@ -27,6 +28,7 @@ function Inicio() {
     <div className="min-h-screen bg-background">
       <Hero />
       <AthletesStrip />
+      <Modalidades />
       <footer className="border-t border-border py-10 text-center text-sm text-muted-foreground">
         <p className="font-display text-2xl text-foreground">Força &amp; Foco</p>
         <p className="mt-2">Disciplina · Energia · Resultado</p>
