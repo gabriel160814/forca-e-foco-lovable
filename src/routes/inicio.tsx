@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Hero } from "@/components/Hero";
 import { AthletesStrip } from "@/components/AthletesStrip";
+import { Modalidades } from "@/components/Modalidades";
 
 export const Route = createFileRoute("/inicio")({
   head: () => ({
