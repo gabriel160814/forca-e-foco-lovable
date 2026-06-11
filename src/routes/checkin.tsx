@@ -35,13 +35,6 @@ const VAGAS_POR_TURMA = 15;
 
 const schema = z.object({
   nome: z.string().trim().min(2, "Informe o nome do aluno").max(80, "Nome muito longo"),
-  telefone: z
-    .string()
-    .trim()
-    .max(20, "Telefone muito longo")
-    .regex(/^[\d\s()+-]*$/, "Telefone inválido")
-    .optional()
-    .or(z.literal("")),
   modalidade: z.string().min(1, "Selecione a modalidade"),
   horario: z.string().min(1, "Selecione o horário"),
 });
@@ -49,7 +42,6 @@ const schema = z.object({
 type Checkin = {
   id: string;
   nome: string;
-  telefone: string | null;
   modalidade: string;
   horario: string;
   created_at: string;
@@ -65,7 +57,6 @@ function CheckinPage() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [nome, setNome] = useState("");
-  const [telefone, setTelefone] = useState("");
   const [modalidade, setModalidade] = useState(MODALIDADES[0]);
   const [horario, setHorario] = useState("");
 
@@ -97,7 +88,6 @@ function CheckinPage() {
       }
       const { error } = await supabase.from("checkins").insert({
         nome: payload.nome,
-        telefone: payload.telefone || null,
         modalidade: payload.modalidade,
         horario: payload.horario,
       });
@@ -106,7 +96,6 @@ function CheckinPage() {
     onSuccess: () => {
       toast.success("Check-in confirmado! Bom treino 💪");
       setNome("");
-      setTelefone("");
       setHorario("");
       queryClient.invalidateQueries({ queryKey: ["checkins"] });
       navigate({ to: "/hoje" });
@@ -116,7 +105,7 @@ function CheckinPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const parsed = schema.safeParse({ nome, telefone, modalidade, horario });
+    const parsed = schema.safeParse({ nome, modalidade, horario });
     if (!parsed.success) {
       toast.error(parsed.error.issues[0].message);
       return;
@@ -181,18 +170,7 @@ function CheckinPage() {
                 />
               </div>
 
-              <div>
-                <Label htmlFor="telefone">Telefone (opcional)</Label>
-                <Input
-                  id="telefone"
-                  value={telefone}
-                  onChange={(e) => setTelefone(e.target.value)}
-                  placeholder="(00) 90000-0000"
-                  className="mt-1.5"
-                  maxLength={20}
-                  inputMode="tel"
-                />
-              </div>
+
 
               <div>
                 <Label>Modalidade</Label>

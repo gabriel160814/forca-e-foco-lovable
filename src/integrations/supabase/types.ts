@@ -22,7 +22,6 @@ export type Database = {
           modalidade: string
           nome: string
           status: string
-          telefone: string | null
         }
         Insert: {
           created_at?: string
@@ -31,7 +30,6 @@ export type Database = {
           modalidade: string
           nome: string
           status?: string
-          telefone?: string | null
         }
         Update: {
           created_at?: string
@@ -40,7 +38,6 @@ export type Database = {
           modalidade?: string
           nome?: string
           status?: string
-          telefone?: string | null
         }
         Relationships: []
       }

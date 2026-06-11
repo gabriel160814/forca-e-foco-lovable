@@ -1,11 +1,11 @@
-import ga from "@/assets/athlete-1.jpg";
-import gg from "@/assets/athlete-2.jpg";
-import gbr from "@/assets/athlete-3.jpg";
+import ga from "@/assets/athlete-1n.jpg.asset.json";
+import gg from "@/assets/athlete-2n.jpg.asset.json";
+import gbr from "@/assets/athlete-3n.jpg.asset.json";
 
 const photos = [
-  { src: ga, alt: "Atleta Força & Foco treinando" },
-  { src: gg, alt: "Atleta Força & Foco em treino de pernas" },
-  { src: gbr, alt: "Atleta Ganley Força & Foco em pose" },
+  { src: ga.url, alt: "Atleta Força & Foco treinando" },
+  { src: gg.url, alt: "Atleta Força & Foco em pose" },
+  { src: gbr.url, alt: "Atleta Força & Foco em treino" },
 ];
 
 export function AthletesStrip() {
