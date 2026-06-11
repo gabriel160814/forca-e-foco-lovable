@@ -166,6 +166,18 @@ function CheckinPage() {
             style={{ boxShadow: "var(--shadow-card)" }}
           >
 
+              <div>
+                <Label htmlFor="contato">Telefone ou e-mail</Label>
+                <Input
+                  id="contato"
+                  value={contato}
+                  onChange={(e) => setContato(e.target.value)}
+                  placeholder="(00) 90000-0000 ou seuemail@exemplo.com"
+                  className="mt-1.5"
+                  maxLength={120}
+                />
+              </div>
+
             <div className="space-y-5">
               <div>
                 <Label htmlFor="nome">Nome do aluno</Label>
