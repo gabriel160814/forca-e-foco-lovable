@@ -22,6 +22,7 @@ type Status = "pendente" | "aceito" | "recusado";
 type Checkin = {
   id: string;
   nome: string;
+  contato: string | null;
   modalidade: string;
   horario: string;
   status: Status;
@@ -175,7 +176,7 @@ function RegistrosPage() {
                   <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
                     <span>{r.modalidade}</span>
                     <span>às <span className="text-foreground">{r.horario}</span></span>
-                    
+                    {r.contato && <span className="text-foreground">{r.contato}</span>}
                     <span>{new Date(r.created_at).toLocaleString("pt-BR")}</span>
                   </div>
                 </div>
