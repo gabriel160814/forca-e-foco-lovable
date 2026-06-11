@@ -23,7 +23,6 @@ type Checkin = {
   id: string;
   nome: string;
   modalidade: string;
-  modalidade: string;
   horario: string;
   status: Status;
   created_at: string;
