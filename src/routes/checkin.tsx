@@ -165,6 +165,18 @@ function CheckinPage() {
             className="rounded-2xl border border-border bg-card/95 p-7 backdrop-blur"
             style={{ boxShadow: "var(--shadow-card)" }}
           >
+            <div className="space-y-5">
+              <div>
+                <Label htmlFor="nome">Nome do aluno</Label>
+                <Input
+                  id="nome"
+                  value={nome}
+                  onChange={(e) => setNome(e.target.value)}
+                  placeholder="Ex.: João da Silva"
+                  className="mt-1.5"
+                  maxLength={80}
+                />
+              </div>
 
               <div>
                 <Label htmlFor="contato">Telefone ou e-mail</Label>
@@ -178,18 +190,6 @@ function CheckinPage() {
                 />
               </div>
 
-            <div className="space-y-5">
-              <div>
-                <Label htmlFor="nome">Nome do aluno</Label>
-                <Input
-                  id="nome"
-                  value={nome}
-                  onChange={(e) => setNome(e.target.value)}
-                  placeholder="Ex.: João da Silva"
-                  className="mt-1.5"
-                  maxLength={80}
-                />
-              </div>
 
 
 
