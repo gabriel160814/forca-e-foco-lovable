@@ -123,6 +123,7 @@ function RegistrosPage() {
           <div className="flex items-center gap-4 text-sm">
             <a href="/checkin" className="text-muted-foreground hover:text-foreground">Check-in</a>
             <a href="/inicio" className="text-muted-foreground hover:text-foreground">Início</a>
+            <button onClick={logout} className="text-muted-foreground hover:text-foreground">Sair</button>
           </div>
         </div>
       </header>
