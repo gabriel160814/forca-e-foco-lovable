@@ -15,6 +15,7 @@ import { Route as InicioRouteImport } from './routes/inicio'
 import { Route as HojeRouteImport } from './routes/hoje'
 import { Route as CheckinRouteImport } from './routes/checkin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ModalidadesSlugRouteImport } from './routes/modalidades.$slug'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -46,6 +47,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ModalidadesSlugRoute = ModalidadesSlugRouteImport.update({
+  id: '/modalidades/$slug',
+  path: '/modalidades/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/inicio': typeof InicioRoute
   '/registros': typeof RegistrosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/modalidades/$slug': typeof ModalidadesSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/inicio': typeof InicioRoute
   '/registros': typeof RegistrosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/modalidades/$slug': typeof ModalidadesSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,6 +79,7 @@ export interface FileRoutesById {
   '/inicio': typeof InicioRoute
   '/registros': typeof RegistrosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/modalidades/$slug': typeof ModalidadesSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,8 +90,16 @@ export interface FileRouteTypes {
     | '/inicio'
     | '/registros'
     | '/sitemap.xml'
+    | '/modalidades/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/checkin' | '/hoje' | '/inicio' | '/registros' | '/sitemap.xml'
+  to:
+    | '/'
+    | '/checkin'
+    | '/hoje'
+    | '/inicio'
+    | '/registros'
+    | '/sitemap.xml'
+    | '/modalidades/$slug'
   id:
     | '__root__'
     | '/'
@@ -91,6 +108,7 @@ export interface FileRouteTypes {
     | '/inicio'
     | '/registros'
     | '/sitemap.xml'
+    | '/modalidades/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -100,6 +118,7 @@ export interface RootRouteChildren {
   InicioRoute: typeof InicioRoute
   RegistrosRoute: typeof RegistrosRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ModalidadesSlugRoute: typeof ModalidadesSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -146,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/modalidades/$slug': {
+      id: '/modalidades/$slug'
+      path: '/modalidades/$slug'
+      fullPath: '/modalidades/$slug'
+      preLoaderRoute: typeof ModalidadesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -156,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   InicioRoute: InicioRoute,
   RegistrosRoute: RegistrosRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ModalidadesSlugRoute: ModalidadesSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

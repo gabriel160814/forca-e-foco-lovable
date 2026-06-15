@@ -55,7 +55,7 @@ export const Route = createFileRoute("/modalidades/$slug")({
 });
 
 function ModalidadePage() {
-  const { mod } = Route.useLoaderData();
+  const { mod } = Route.useLoaderData() as { mod: import("@/lib/modalidades-data").Modalidade };
 
   return (
     <div className="min-h-screen bg-background">
