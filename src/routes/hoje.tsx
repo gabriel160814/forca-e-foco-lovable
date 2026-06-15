@@ -65,25 +65,25 @@ function isHoje(iso: string) {
 }
 
 function HojePage() {
+  const { password, ready, login, logout } = useStaffPassword();
   const qc = useQueryClient();
   const [filtro, setFiltro] = useState<"todos" | Status>("todos");
+  const listFn = useServerFn(staffListCheckins);
+  const updateFn = useServerFn(staffUpdateStatus);
+  const deleteFn = useServerFn(staffDeleteCheckin);
 
   const { data: registros = [], isLoading } = useQuery({
-    queryKey: ["checkins-hoje"],
+    queryKey: ["checkins-hoje", password],
+    enabled: !!password,
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("checkins")
-        .select("*")
-        .order("created_at", { ascending: false });
-      if (error) throw error;
-      return (data as Checkin[]).filter((r) => isHoje(r.created_at));
+      const rows = await listFn({ data: { password: password! } });
+      return (rows as Checkin[]).filter((r) => isHoje(r.created_at));
     },
   });
 
   const updateStatus = useMutation({
     mutationFn: async ({ id, status }: { id: string; status: Status }) => {
-      const { error } = await supabase.from("checkins").update({ status }).eq("id", id);
-      if (error) throw error;
+      await updateFn({ data: { password: password!, id, status } });
     },
     onSuccess: () => {
       toast.success("Status atualizado");
@@ -94,8 +94,7 @@ function HojePage() {
 
   const remover = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from("checkins").delete().eq("id", id);
-      if (error) throw error;
+      await deleteFn({ data: { password: password!, id } });
     },
     onSuccess: () => {
       toast.success("Registro removido");
@@ -103,6 +102,9 @@ function HojePage() {
     },
     onError: (e: Error) => toast.error(e.message),
   });
+
+  if (!ready) return null;
+  if (!password) return <StaffPasswordGate onSubmit={login} />;
 
   const filtrados = filtro === "todos" ? registros : registros.filter((r) => r.status === filtro);
 
