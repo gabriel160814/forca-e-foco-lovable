@@ -141,6 +141,7 @@ function HojePage() {
             <a href="/checkin" className="text-muted-foreground hover:text-foreground">Check-in</a>
             <a href="/registros" className="text-muted-foreground hover:text-foreground">Registros</a>
             <a href="/inicio" className="text-muted-foreground hover:text-foreground">Início</a>
+            <button onClick={logout} className="text-muted-foreground hover:text-foreground">Sair</button>
           </div>
         </div>
       </header>
