@@ -1,11 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import bgHoje from "@/assets/bg-hoje.webp.asset.json";
+import { useStaffPassword } from "@/hooks/use-staff-password";
+import { StaffPasswordGate } from "@/components/StaffPasswordGate";
+import {
+  staffListCheckins,
+  staffUpdateStatus,
+  staffDeleteCheckin,
+} from "@/lib/staff-checkins.functions";
 
 export const Route = createFileRoute("/hoje")({
   head: () => ({
