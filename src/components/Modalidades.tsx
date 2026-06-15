@@ -1,16 +1,5 @@
-import musculacao from "@/assets/mod-musculacao.jpg";
-import cross from "@/assets/mod-cross.jpg";
-import funcional from "@/assets/mod-funcional.jpg";
-import spinning from "@/assets/mod-spinning.jpg";
-import boxe from "@/assets/mod-boxe.jpg";
-
-const modalidades = [
-  { nome: "Musculação", img: musculacao },
-  { nome: "Cross", img: cross },
-  { nome: "Funcional", img: funcional },
-  { nome: "Spinning", img: spinning },
-  { nome: "Boxe", img: boxe },
-];
+import { Link } from "@tanstack/react-router";
+import { modalidades } from "@/lib/modalidades-data";
 
 export function Modalidades() {
   return (
@@ -23,15 +12,20 @@ export function Modalidades() {
           <h2 className="mt-2 font-display text-4xl text-foreground sm:text-5xl">
             Modalidades
           </h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Clique em uma modalidade para ver mais fotos e detalhes.
+          </p>
         </div>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
           {modalidades.map((m) => (
-            <div
-              key={m.nome}
-              className="group relative aspect-[3/4] overflow-hidden rounded-xl border border-border"
+            <Link
+              key={m.slug}
+              to="/modalidades/$slug"
+              params={{ slug: m.slug }}
+              className="group relative aspect-[3/4] overflow-hidden rounded-xl border border-border transition hover:border-primary"
             >
               <img
-                src={m.img}
+                src={m.capa}
                 alt={`Aula de ${m.nome} na Força & Foco`}
                 loading="lazy"
                 width={800}
@@ -44,7 +38,7 @@ export function Modalidades() {
                   {m.nome}
                 </span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
