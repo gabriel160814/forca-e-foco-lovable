@@ -63,3 +63,17 @@ export const staffVerifyPassword = createServerFn({ method: "POST" })
     verifyPassword(data.password);
     return { ok: true };
   });
+
+// Lista pública: retorna registros SEM o campo "contato" (PII).
+// Usada para exibir prévia borrada antes da senha ser informada.
+export const publicListCheckins = createServerFn({ method: "GET" })
+  .handler(async () => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: rows, error } = await supabaseAdmin
+      .from("checkins")
+      .select("id, nome, modalidade, horario, status, created_at")
+      .order("created_at", { ascending: false });
+    if (error) throw new Error(error.message);
+    return rows ?? [];
+  });
+
