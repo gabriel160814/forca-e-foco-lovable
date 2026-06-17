@@ -7,11 +7,13 @@ import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import bgHoje from "@/assets/bg-hoje.webp.asset.json";
 import { useStaffPassword } from "@/hooks/use-staff-password";
-import { StaffPasswordGate } from "@/components/StaffPasswordGate";
+import { StaffUnlockPanel } from "@/components/StaffUnlockPanel";
 import {
   staffListCheckins,
   staffUpdateStatus,
   staffDeleteCheckin,
+  staffVerifyPassword,
+  publicListCheckins,
 } from "@/lib/staff-checkins.functions";
 
 export const Route = createFileRoute("/hoje")({
@@ -69,15 +71,21 @@ function HojePage() {
   const qc = useQueryClient();
   const [filtro, setFiltro] = useState<"todos" | Status>("todos");
   const listFn = useServerFn(staffListCheckins);
+  const publicListFn = useServerFn(publicListCheckins);
+  const verifyFn = useServerFn(staffVerifyPassword);
   const updateFn = useServerFn(staffUpdateStatus);
   const deleteFn = useServerFn(staffDeleteCheckin);
 
+  const unlocked = !!password;
+
   const { data: registros = [], isLoading } = useQuery({
-    queryKey: ["checkins-hoje", password],
-    enabled: !!password,
+    queryKey: ["checkins-hoje", unlocked],
+    enabled: ready,
     queryFn: async () => {
-      const rows = await listFn({ data: { password: password! } });
-      return (rows as Checkin[]).filter((r) => isHoje(r.created_at));
+      const rows = unlocked
+        ? ((await listFn({ data: { password: password! } })) as Checkin[])
+        : ((await publicListFn()) as Checkin[]);
+      return rows.filter((r) => isHoje(r.created_at));
     },
   });
 
@@ -104,7 +112,6 @@ function HojePage() {
   });
 
   if (!ready) return null;
-  if (!password) return <StaffPasswordGate onSubmit={login} />;
 
   const filtrados = filtro === "todos" ? registros : registros.filter((r) => r.status === filtro);
 
@@ -120,6 +127,17 @@ function HojePage() {
     month: "long",
     year: "numeric",
   });
+
+  async function handleUnlock(pw: string) {
+    await verifyFn({ data: { password: pw } });
+    login(pw);
+    qc.invalidateQueries({ queryKey: ["checkins-hoje"] });
+  }
+
+  function handleLock() {
+    logout();
+    qc.invalidateQueries({ queryKey: ["checkins-hoje"] });
+  }
 
   return (
     <div className="relative min-h-screen">
@@ -141,7 +159,9 @@ function HojePage() {
             <a href="/checkin" className="text-muted-foreground hover:text-foreground">Check-in</a>
             <a href="/registros" className="text-muted-foreground hover:text-foreground">Registros</a>
             <a href="/inicio" className="text-muted-foreground hover:text-foreground">Início</a>
-            <button onClick={logout} className="text-muted-foreground hover:text-foreground">Sair</button>
+            <a href="#area-restrita" className="text-muted-foreground hover:text-foreground">
+              {unlocked ? "Bloquear" : "Área restrita"}
+            </a>
           </div>
         </div>
       </header>
@@ -151,7 +171,9 @@ function HojePage() {
           <p className="text-sm uppercase tracking-widest text-primary">{hojeStr}</p>
           <h1 className="mt-2 text-4xl text-foreground sm:text-5xl">Check-ins de Hoje</h1>
           <p className="mt-2 text-muted-foreground">
-            Aceite, recuse ou deixe pendente os alunos do dia.
+            {unlocked
+              ? "Aceite, recuse ou deixe pendente os alunos do dia."
+              : "Visualização protegida. Para alterar status ou ver contatos, desbloqueie a Área Restrita no final da página."}
           </p>
         </div>
 
@@ -193,7 +215,13 @@ function HojePage() {
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
                   <div className="flex items-center gap-3">
-                    <h3 className="text-xl font-semibold text-foreground">{r.nome}</h3>
+                    <h3
+                      className={`text-xl font-semibold text-foreground transition ${
+                        unlocked ? "" : "blur-sm select-none"
+                      }`}
+                    >
+                      {r.nome}
+                    </h3>
                     <span
                       className={`rounded-full border px-3 py-0.5 text-xs font-semibold uppercase tracking-wide ${badgeClasses(r.status)}`}
                     >
@@ -203,51 +231,58 @@ function HojePage() {
                   <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
                     <span>{r.modalidade}</span>
                     <span>às <span className="text-foreground">{r.horario}</span></span>
-                    {r.contato && <span className="text-foreground">{r.contato}</span>}
+                    {unlocked && r.contato && <span className="text-foreground">{r.contato}</span>}
+                    {!unlocked && (
+                      <span className="text-foreground blur-sm select-none">••••••••••</span>
+                    )}
                     <span>{new Date(r.created_at).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}</span>
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2">
-                  <Button
-                    size="sm"
-                    variant={r.status === "aceito" ? "default" : "outline"}
-                    onClick={() => updateStatus.mutate({ id: r.id, status: "aceito" })}
-                    disabled={updateStatus.isPending}
-                  >
-                    ✓ Aceitar
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant={r.status === "pendente" ? "default" : "outline"}
-                    onClick={() => updateStatus.mutate({ id: r.id, status: "pendente" })}
-                    disabled={updateStatus.isPending}
-                  >
-                    ⏳ Pendente
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant={r.status === "recusado" ? "destructive" : "outline"}
-                    onClick={() => updateStatus.mutate({ id: r.id, status: "recusado" })}
-                    disabled={updateStatus.isPending}
-                  >
-                    ✕ Recusar
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => {
-                      if (confirm(`Remover ${r.nome}?`)) remover.mutate(r.id);
-                    }}
-                    disabled={remover.isPending}
-                  >
-                    🗑
-                  </Button>
-                </div>
+                {unlocked && (
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      size="sm"
+                      variant={r.status === "aceito" ? "default" : "outline"}
+                      onClick={() => updateStatus.mutate({ id: r.id, status: "aceito" })}
+                      disabled={updateStatus.isPending}
+                    >
+                      ✓ Aceitar
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant={r.status === "pendente" ? "default" : "outline"}
+                      onClick={() => updateStatus.mutate({ id: r.id, status: "pendente" })}
+                      disabled={updateStatus.isPending}
+                    >
+                      ⏳ Pendente
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant={r.status === "recusado" ? "destructive" : "outline"}
+                      onClick={() => updateStatus.mutate({ id: r.id, status: "recusado" })}
+                      disabled={updateStatus.isPending}
+                    >
+                      ✕ Recusar
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => {
+                        if (confirm(`Remover ${r.nome}?`)) remover.mutate(r.id);
+                      }}
+                      disabled={remover.isPending}
+                    >
+                      🗑
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
           ))}
         </div>
+
+        <StaffUnlockPanel unlocked={unlocked} onUnlock={handleUnlock} onLock={handleLock} />
       </main>
     </div>
   );
