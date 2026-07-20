@@ -69,7 +69,7 @@ function ModalidadePage() {
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/30" />
-        <div className="relative z-10 mx-auto flex h-full max-w-6xl flex-col justify-end px-6 pb-10">
+        <div className="relative z-10 mx-auto flex h-full max-w-6xl lg:max-w-7xl flex-col justify-end px-6 pb-10">
           <Link
             to="/inicio"
             className="mb-4 inline-block w-fit text-xs font-semibold uppercase tracking-widest text-primary hover:underline"
@@ -86,8 +86,8 @@ function ModalidadePage() {
       </section>
 
       {/* Destaques */}
-      <section className="border-b border-border py-12">
-        <div className="mx-auto grid max-w-6xl gap-4 px-6 sm:grid-cols-3">
+      <section className="border-b border-border py-12 lg:py-20">
+        <div className="mx-auto grid max-w-6xl lg:max-w-7xl gap-4 px-6 sm:grid-cols-3">
           {mod.destaques.map((d) => (
             <div
               key={d}
@@ -101,8 +101,8 @@ function ModalidadePage() {
       </section>
 
       {/* Galeria */}
-      <section className="py-12">
-        <div className="mx-auto max-w-6xl px-6">
+      <section className="py-12 lg:py-20">
+        <div className="mx-auto max-w-6xl lg:max-w-7xl px-6">
           <h2 className="mb-6 font-display text-3xl text-foreground sm:text-4xl">
             Galeria
           </h2>
@@ -127,8 +127,8 @@ function ModalidadePage() {
       </section>
 
       {/* Outras modalidades */}
-      <section className="border-t border-border py-12">
-        <div className="mx-auto max-w-6xl px-6">
+      <section className="border-t border-border py-12 lg:py-20">
+        <div className="mx-auto max-w-6xl lg:max-w-7xl px-6">
           <h2 className="mb-6 font-display text-2xl text-foreground">
             Outras modalidades
           </h2>
