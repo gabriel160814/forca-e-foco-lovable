@@ -14,7 +14,7 @@ export function Section({
   children: ReactNode;
 }) {
   return (
-    <section id={id} className="mx-auto max-w-6xl lg:max-w-7xl scroll-mt-24 px-6 py-16">
+    <section id={id} className="mx-auto max-w-6xl lg:max-w-7xl scroll-mt-24 px-6 py-16 lg:py-28">
       <div className="mb-10 flex items-end gap-4 border-b border-border pb-6">
         <span className="font-display text-5xl leading-none text-primary">{number}</span>
         <div>

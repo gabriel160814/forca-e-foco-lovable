@@ -16,7 +16,7 @@ export function Hero() {
         className="absolute inset-0"
         style={{ background: "var(--gradient-hero)" }}
       />
-      <div className="relative z-10 mx-auto w-full max-w-6xl lg:max-w-7xl px-6 py-24">
+      <div className="relative z-10 mx-auto w-full max-w-6xl lg:max-w-7xl px-6 py-24 lg:py-32">
         <span className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-background/40 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary backdrop-blur">
           Força &amp; Foco · v1.0.0
         </span>

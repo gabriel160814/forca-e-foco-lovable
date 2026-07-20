@@ -166,7 +166,7 @@ function HojePage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl lg:max-w-7xl px-6 py-12">
+      <main className="mx-auto max-w-6xl lg:max-w-7xl px-6 py-12 lg:py-20">
         <div className="mb-8">
           <p className="text-sm uppercase tracking-widest text-primary">{hojeStr}</p>
           <h1 className="mt-2 text-4xl text-foreground sm:text-5xl">Check-ins de Hoje</h1>
