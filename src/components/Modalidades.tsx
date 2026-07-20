@@ -4,7 +4,7 @@ import { modalidades } from "@/lib/modalidades-data";
 export function Modalidades() {
   return (
     <section className="border-b border-border bg-background py-16">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-6xl lg:max-w-7xl px-6">
         <div className="mb-10 text-center">
           <span className="text-xs font-semibold uppercase tracking-widest text-primary">
             Nossas aulas

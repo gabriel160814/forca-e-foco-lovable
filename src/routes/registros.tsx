@@ -134,7 +134,7 @@ function RegistrosPage() {
       <Toaster richColors position="top-center" />
 
       <header className="border-b border-border">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+        <div className="mx-auto flex max-w-6xl lg:max-w-7xl items-center justify-between px-6 py-5">
           <a href="/" className="font-display text-2xl text-foreground">
             Força &amp; <span className="text-primary">Foco</span>
           </a>
@@ -148,7 +148,7 @@ function RegistrosPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-6 py-12">
+      <main className="mx-auto max-w-6xl lg:max-w-7xl px-6 py-12">
         <div className="mb-8">
           <h1 className="text-4xl text-foreground sm:text-5xl">Registros dos Alunos</h1>
           <p className="mt-2 text-muted-foreground">
