@@ -151,7 +151,7 @@ function CheckinPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-5xl px-6 py-12">
+      <main className="mx-auto max-w-5xl lg:max-w-6xl px-6 py-12 lg:py-20">
         <div className="mb-10">
           <h1 className="text-4xl text-foreground sm:text-5xl">Check-in de Aula</h1>
           <p className="mt-2 text-muted-foreground">

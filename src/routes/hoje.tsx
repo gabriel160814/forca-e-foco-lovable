@@ -151,7 +151,7 @@ function HojePage() {
       <Toaster richColors position="top-center" />
 
       <header className="border-b border-border">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+        <div className="mx-auto flex max-w-6xl lg:max-w-7xl items-center justify-between px-6 py-5">
           <a href="/" className="font-display text-2xl text-foreground">
             Força &amp; <span className="text-primary">Foco</span>
           </a>
@@ -166,7 +166,7 @@ function HojePage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-6 py-12">
+      <main className="mx-auto max-w-6xl lg:max-w-7xl px-6 py-12 lg:py-20">
         <div className="mb-8">
           <p className="text-sm uppercase tracking-widest text-primary">{hojeStr}</p>
           <h1 className="mt-2 text-4xl text-foreground sm:text-5xl">Check-ins de Hoje</h1>
